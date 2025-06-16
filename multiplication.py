@@ -14,7 +14,7 @@ def multiply_numbers(numbers):
         if result % 2 == 0:
             return result, numbers
         else:
-            new_num = random.randint(0,9)
+            new_num = random.randint(1,9)
             print(f"Product is odd, adding random number {new_num} to the list")
             numbers.append(new_num)
             count += 1

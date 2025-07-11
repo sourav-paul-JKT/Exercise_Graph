@@ -26,6 +26,5 @@ def build_pipeline():
     manual_register(modules["multiplication"].multiply_numbers, priority=3)
     manual_register(modules["modulo"].check_multiplication_result, priority=4)
 
-    manual_register(modules["division"].divide_numbers, priority=5)
 
     return modules

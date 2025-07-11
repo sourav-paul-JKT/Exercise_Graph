@@ -1,7 +1,5 @@
-import random
-from addition import add_numbers
-from multiplication import multiply_numbers
-from division import divide_numbers
+from pipeline_factory import build_pipeline
+from pipeline_registry import get_ordered_pipeline
 
 def get_user_input():
     while True:
@@ -17,20 +15,38 @@ def get_user_input():
 
 
 def main():
-    numbers = get_user_input()
+    build_pipeline()
 
-    total, numbers = add_numbers(numbers)
+    context = {
+        "numbers": get_user_input(),
+        "addition_result": None,
+        "multiplication_result": None,
+        "division_result": None
+    }
 
-    if total % 2 == 0:
-        product, numbers = multiply_numbers(numbers)
+    for step in get_ordered_pipeline():
+        try:
+            step(context)
+        except Exception as e:
+            print(f"Step {step.__name__} failed: {e}")
+            break
 
-        if product % 2 == 0:
-            result = divide_numbers(numbers)
-            print(f"Final Division Result (integer): {result}")
-        else:
-            print(f"Multiplication result after retries is odd: {product}")
-    else:
-        print(f"Addition result after retries is odd: {total}")
+        if context["division_result"] is not None:
+            print(f"Final Division Result: {context["division_result"]}")
+    # numbers = get_user_input()
+
+    # total, numbers = add_numbers(numbers)
+
+    # if total % 2 == 0:
+    #     product, numbers = multiply_numbers(numbers)
+
+    #     if product % 2 == 0:
+    #         result = divide_numbers(numbers)
+    #         print(f"Final Division Result (integer): {result}")
+    #     else:
+    #         print(f"Multiplication result after retries is odd: {product}")
+    # else:
+    #     print(f"Addition result after retries is odd: {total}")
 
 if __name__ == "__main__":
     main()

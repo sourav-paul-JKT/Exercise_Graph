@@ -11,7 +11,7 @@ def load_pipeline_modules():
             module_name = filename[:-3]
             file_path = os.path.join(PIPELINE_DIR, filename)
 
-            spec = importlib.util.spec_from_file_location(f"{PIPELINE_DIR}.{module_name}", file_path)
+            spec = importlib.util.spec_from_file_location(f"{module_name}", file_path)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             loaded_modules[module_name] = module
